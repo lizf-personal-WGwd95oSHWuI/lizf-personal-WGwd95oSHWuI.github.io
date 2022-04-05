@@ -127,8 +127,8 @@
     {
       update_action_bar([]);
 
-      write_console('Mission Control - Version IDK2');
-      write_console('Crpto: ' + window.crypto);
+      write_console('Mission Control - Version IDK3');
+      write_console('CrptoUUID: ' + window.crypto.randomUUID);
       write_console('Your CLIENT_ID is ' + MC_CLIENT_ID);
       write_console('Initializing inbox loop...');
       mc_check_inbox_loop(handle_message);
