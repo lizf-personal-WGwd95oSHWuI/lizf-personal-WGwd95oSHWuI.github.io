@@ -1,7 +1,7 @@
 var MISSIONCONTROL_CLIENT_IS_LOADED = true;
 var MISSIONCONTROL_USE_PROXY = (window.MISSIONCONTROL_USE_PROXY === undefined) ? true : window.MISSIONCONTROL_USE_PROXY;
 
-var MC_CLIENT_ID = 'MissionControl-Client-' + (function()
+var mc_generate_uid = function()
 {
   if (window.crypto)
   {
@@ -14,7 +14,9 @@ var MC_CLIENT_ID = 'MissionControl-Client-' + (function()
     return btoa(String.fromCharCode.apply(null, buf));
   }
   return (''+Math.random()).slice(2)+(''+Math.random()).slice(2);
-}());
+};
+
+var MC_CLIENT_ID = 'MissionControl-Client-' + mc_generate_uid();
 
 var mc_call_api = function(URL, content, callback)
 {
@@ -103,7 +105,7 @@ class MCXHRProxy
     this.readyState = 0;
     this.status = 0;
     this.headers = {};
-    this.uid = crypto.randomUUID();
+    this.uid = mc_generate_uid();
   }
 
   open(method, url)
