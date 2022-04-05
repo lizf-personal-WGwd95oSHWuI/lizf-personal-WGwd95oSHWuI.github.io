@@ -1,6 +1,20 @@
-var MC_CLIENT_ID = 'MissionControl-Client-' + ((window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (''+Math.random()).slice(2)+(''+Math.random()).slice(2));
 var MISSIONCONTROL_CLIENT_IS_LOADED = true;
 var MISSIONCONTROL_USE_PROXY = (window.MISSIONCONTROL_USE_PROXY === undefined) ? true : window.MISSIONCONTROL_USE_PROXY;
+
+var MC_CLIENT_ID = 'MissionControl-Client-' + (function()
+{
+  if (window.crypto)
+  {
+    if (crypto.randomUUID)
+    {
+      return crypto.randomUUID();
+    }
+    var buf = new Uint8Array(27);
+    crypto.getRandomValues(buf);
+    return btoa(String.fromCharCode.apply(null, buf));
+  }
+  return (''+Math.random()).slice(2)+(''+Math.random()).slice(2);
+}());
 
 var mc_call_api = function(URL, content, callback)
 {
