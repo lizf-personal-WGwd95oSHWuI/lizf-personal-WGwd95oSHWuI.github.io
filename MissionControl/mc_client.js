@@ -18,7 +18,7 @@ var mc_generate_uid = function()
 
 var MC_CLIENT_ID = 'MissionControl-Client-' + mc_generate_uid();
 
-var mc_call_api = function(URL, content, callback)
+var mc_call_api = function(URL, content, callback, error_callback)
 {
   var method = content ? 'POST' : 'GET';
   var xhr = new XMLHttpRequest();
@@ -29,6 +29,11 @@ var mc_call_api = function(URL, content, callback)
     {
       callback(JSON.parse(xhr.responseText));
     }
+  }
+  
+  if (error_callback)
+  {
+    xhr.onerror = error_callback;
   }
 
   if (content)
@@ -63,6 +68,11 @@ var mc_check_inbox_loop = function(message_handler)
     }
     window.MC_INBOX_LOOP_RUNNING = false;
     mc_check_inbox_loop(message_handler);
+  },
+  function()
+  {
+    // Reset the flag if an error occurs so the loop will be restarted at the next request
+    window.MC_INBOX_LOOP_RUNNING = false;
   });
 };
 
