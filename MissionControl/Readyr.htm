@@ -2,8 +2,6 @@
   <head>
     <title>Readyr</title>
     <meta name="robots" content="noindex, nofollow" />
-    <script src="client_config.js"></script>
-    <script src="mc_client.js"></script>
     <script>
       window.MC_EXTENSION_NAME = document.title;
       const NEW_CATEGORY = '+ New Category';
@@ -523,12 +521,12 @@
           if ((direction == 'next' && ydiff > 1) ||
               (direction == 'previous' && ydiff < -1)) {
             pane.scrollTop = current + ydiff;
-            mark_read({'target':item})
+            mark_read({'target':item, 'stopPropagation': function(){}})
             return;
           }
         }
       }
-      
+
       var get_current_item = function() {
         var items = document.querySelectorAll('.item');
         if (items) {
@@ -623,8 +621,20 @@
       {
         width: 85%;
         right: 0;
+        background-color: #000;
+        color: #fff;
       }
       
+      .right_pane a:link
+      {
+        color: #2b7dff;
+      }
+
+      .right_pane a:visited
+      {
+        color: #b52bff;
+      }
+
       .category
       {
         background-color: #4f9b64;
@@ -727,7 +737,7 @@
       .feint
       {
         display: inline-block;
-        color: #333;
+        color: #999;
         font-size: 8pt;
         font-style: oblique;
       }
@@ -751,7 +761,7 @@
       
       .read
       {
-        border-color: #CCC;
+        border-color: #555;
       }
       
       .mark_unread_link
